@@ -1,3 +1,4 @@
+import allure
 
 from db.db_functions import *
 
@@ -10,6 +11,7 @@ def preparing():
                availability=20, price=2000, room_desc='описание номера', is_active=1, country_id=1, region_id=1)
 
 
+@allure.title("Проверка создания записи")
 def test_create_row():
     preparing()
     row = select_by_id(id=11)
