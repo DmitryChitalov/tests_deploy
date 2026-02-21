@@ -29,7 +29,7 @@ jobs:
 
       - name: Run Selenium tests with pytest and generate Allure results
         run: |
-          pytest --numprocesses 2
+          pytest --alluredir=./allure-results --numprocesses 2
 
       - name: Restore Coverage history
         uses: actions/cache/restore@v5
