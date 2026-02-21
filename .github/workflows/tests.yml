@@ -76,18 +76,7 @@ jobs:
 #          ref: gh-pages
 #          path: gh-pages
 
-      - name: Download Allure results
-        uses: actions/download-artifact@v6
-        with:
-          name: allure-results
-          path: allure-results
-
-      - name: Allure Report action from marketplace
-        uses: simple-elf/allure-report-action@v1.13
-        if: always()
-        with:
-          allure_results: allure-results
-          allure_history: allure-history
+#13
 
       - name: Deploy report to GitHub Pages
         if: always()
