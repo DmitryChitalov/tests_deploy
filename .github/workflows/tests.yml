@@ -58,9 +58,13 @@
 #          publish_dir: allure-history
 
 
-name: Selenium Python Tests with Allure
+name: UI Tests with Allure
 
-on: [push]
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   test:
@@ -73,31 +77,24 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.13'
 
       - name: Install dependencies
         run: |
-          pip install pytest selenium allure-pytest
-          # Установите webdriver, например, webdriver-manager
-          pip install webdriver-manager
+          pip install -r requirements.txt
+          # Убедитесь, что allure-pytest установлен
 
-      - name: Run Selenium Tests
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@latest
+
+      - name: Run Tests
         run: |
-          # Запуск тестов и генерация результатов в папку allure-results
           pytest --alluredir=allure-results
+        continue-on-error: true # Чтобы отчет сгенерировался даже при падении тестов
 
-      - name: Generate Allure Report
-        if: always() # Запускать даже если тесты упали
-        uses: simple-elf/allure-report-action@master
+      - name: Get Allure history
+        uses: actions/upload-artifact@v3
         with:
-          allure_results: 'allure-results'
-          allure_report: 'allure-report'
-          gh_pages: 'gh-pages' # Опционально: для публикации в GH Pages!
-
-      - name: Upload Allure Report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-report
-          path: allure-report
-          retention-days: 7
+          name: allure-results
+          path: allure-results
+          retention-days: 1
