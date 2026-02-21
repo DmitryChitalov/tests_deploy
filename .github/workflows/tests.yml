@@ -32,16 +32,6 @@ jobs:
           pytest --alluredir=allure-results
         continue-on-error: true # Чтобы сгенерировать отчет даже при падении тестов f
 
-      - name: Run Selenium Tests
-        run: mvn clean test # Или pytest
-      - name: Generate Allure Report
-        run: allure generate allure-results -o allure-results
-      - name: Upload Allure Report
-        uses: actions/upload-artifact@v3
-        with:
-          name: allure-results
-          path: allure-results
-
       - name: Get Allure history
         uses: actions/checkout@v3
         if: always()
