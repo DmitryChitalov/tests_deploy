@@ -59,7 +59,7 @@ jobs:
 
       - name: Upload Allure results
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v4
         with:
           name: allure-results
           path: allure-results
@@ -71,19 +71,19 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v4
         with:
           ref: gh-pages
           path: gh-pages
 
       - name: Download Allure results
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v4
         with:
           name: allure-results
           path: allure-results
 
       - name: Allure Report action from marketplace
-        uses: simple-elf/allure-report-action@v1.13
+        uses: simple-elf/allure-report-action@v1.12
         if: always()
         with:
           allure_results: allure-results
@@ -91,7 +91,7 @@ jobs:
 
       - name: Deploy report to Github Pages
         if: always()
-        uses: peaceiris/actions-gh-pages@v2
+        uses: peaceiris/actions-gh-pages@v4
         env:
           PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_BRANCH: gh-pages
