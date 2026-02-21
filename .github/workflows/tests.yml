@@ -20,6 +20,12 @@ jobs:
           pip install -r requirements.txt
           # Установка Selenium, pytest, allure-pytest
 
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
 
       - name: Install Chrome
         uses: browser-actions/setup-chrome@v1
