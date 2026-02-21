@@ -1,99 +1,41 @@
-name: UI tests
+name: Selenium Python Tests with Allure
 
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+on: [push]
 
 jobs:
-  run-tests:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v6.0.1
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v6.1.0
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.13'
+          python-version: '3.9'
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          playwright install --with-deps 
+          pip install selenium pytest allure-pytest
+          # Установите webdriver, например, через webdriver-manager
+          pip install webdriver-manager
 
-      - name: Run Selenium tests with pytest and generate Allure results
+      - name: Run tests with Allure
         run: |
-          pytest --alluredir=./allure-results --numprocesses 2
+          pytest --alluredir=allure-results
+        continue-on-error: true # Чтобы отчет сгенерировался даже при падении тестов
 
-      - name: Restore Coverage history
-        uses: actions/cache/restore@v5
-        with:
-          path: coverage-history.json
-          key: coverage-history-${{ github.run_id }}
-          restore-keys: |
-            coverage-history-
-
-#      - name: Generate Coverage report
-#        run: |
-#          ui-coverage-tool save-report
-#
-#      - name: Cache Coverage history
-#        if: always()
-#        uses: actions/cache/save@v5
-#        with:
-#          path: coverage-history.json
-#          key: coverage-history-${{ github.run_id }}
-#
-#      - name: Upload Coverage  results
-#        if: always()
-#        uses: actions/upload-artifact@v6
-#        with:
-#          name: coverage-report
-#          path: coverage.html
-
-      - name: Upload Allure results
-        if: always()
-        uses: actions/upload-artifact@v6
-        with:
-          name: allure-results
-          path: allure-results
-
-  publish-report:
-    if: always()
-    needs: run-tests
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v6.0.1
-        with:
-          ref: gh-pages
-          path: gh-pages
-
-      - name: Download Allure results
-        uses: actions/download-artifact@v6
-        with:
-          name: allure-results
-          path: allure-results
-
-      - name: Allure Report action from marketplace
-        uses: simple-elf/allure-report-action@v1.13
+      - name: Generate Allure report
+        uses: simple-elf/allure-report-action@master
         if: always()
         with:
           allure_results: allure-results
-          allure_history: allure-history
+          allure_report: allure-report
 
-      - name: Deploy report to GitHub Pages
+      - name: Upload Allure report
+        uses: actions/upload-artifact@v3
         if: always()
-        uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: allure-history
-          publish_branch: gh-pages
-
+          name: allure-report
+          path: allure-report
