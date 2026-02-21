@@ -64,9 +64,11 @@ jobs:
 #          publish_dir: allure-history
 
 
-      - name: Test execution
-        run: pytest --alluredir=allure-results # Пример для Python
-
+      - name: Run Tests
+        run: |
+          pytest --alluredir=allure-results
+        continue-on-error: true # Чтобы сгенерировать отчет даже при падении тестов
+        
       - name: Get Allure history
         uses: actions/checkout@v3
         if: always()
