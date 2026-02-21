@@ -87,7 +87,7 @@ jobs:
           pytest --alluredir=allure-results
 
       - name: Generate Allure Report
-        if: always() # Запускать даже если тесты упали
+        if: always() # Запускать даже если тесты упали !
         uses: simple-elf/allure-report-action@master
         with:
           allure_results: 'allure-results'
