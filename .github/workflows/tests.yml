@@ -74,10 +74,10 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6.0.1
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6.0.1
         with:
           python-version: '3.12'
 
@@ -104,19 +104,19 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6.0.1
         with:
           ref: gh-pages
           path: gh-pages
 
       - name: Download Allure results
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           name: allure-results
           path: allure-results
 
       - name: Allure Report action from marketplace
-        uses: simple-elf/allure-report-action@v1.12
+        uses: simple-elf/allure-report-action@v1.13
         if: always()
         with:
           allure_results: allure-results
