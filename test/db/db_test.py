@@ -28,13 +28,13 @@ def test_accomodation_delete():
     assert len(result_before) != len(result_after)
 #
 #
-# def test_accomodation_update():
-#     preparing()
-#     row_before = select_by_id(id=11)
-#     update_by_id(name='санаторий парус 3', id=11)
-#     row_after = select_by_id(id=11)
-#     delete_by_id(id=11)
-#     assert row_before['name'] != row_after['name']
+def test_accomodation_update():
+    preparing()
+    row_before = select_by_id(id=11)
+    update_by_id(name='санаторий парус 3', id=11)
+    row_after = select_by_id(id=11)
+    delete_by_id(id=11)
+    assert row_before['name'] != row_after['name']
 #
 #
 # def test_active_accomodations():
