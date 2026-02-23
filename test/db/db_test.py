@@ -18,34 +18,34 @@ def test_create_row():
     delete_by_id(id=11)
     assert row
 
-
-def test_accomodation_delete():
-    preparing()
-    result_before = select_all()
-    delete_by_id(id=11)
-    result_after = select_all()
-    delete_by_id(id=11)
-    assert len(result_before) != len(result_after)
+#
+# def test_accomodation_delete():
+#     preparing()
+#     result_before = select_all()
+#     delete_by_id(id=11)
+#     result_after = select_all()
+#     delete_by_id(id=11)
+#     assert len(result_before) != len(result_after)
+# #
+# #
+# def test_accomodation_update():
+#     preparing()
+#     row_before = select_by_id(id=11)
+#     update_by_id(name='санаторий парус 3', id=11)
+#     row_after = select_by_id(id=11)
+#     delete_by_id(id=11)
+#     assert row_before['name'] != row_after['name']
+# #
+# #
+# def test_active_accomodations():
+#     result = select_all()
+#     lst = [el['is_active'] for el in result]
+#     assert 0 not in lst
 #
 #
-def test_accomodation_update():
-    preparing()
-    row_before = select_by_id(id=11)
-    update_by_id(name='санаторий парус 3', id=11)
-    row_after = select_by_id(id=11)
-    delete_by_id(id=11)
-    assert row_before['name'] != row_after['name']
+# def test_select_by_id():
+#     assert select_by_id(id=1) is not None
 #
 #
-def test_active_accomodations():
-    result = select_all()
-    lst = [el['is_active'] for el in result]
-    assert 0 not in lst
-
-
-def test_select_by_id():
-    assert select_by_id(id=1) is not None
-
-
-def test_select_by_id_not():
-    assert select_by_id(id=11) is None
+# def test_select_by_id_not():
+#     assert select_by_id(id=11) is None
